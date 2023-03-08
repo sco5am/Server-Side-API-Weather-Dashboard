@@ -138,3 +138,46 @@ function getWeather() {
         })
     return;
 }
+
+function getCoordinates () {
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${APIkey}`;
+    var storedCities = JSON.parse(localStorage.getItem("cities")) || [];
+
+    fetch(requestUrl)
+      .then(function (response) {
+        if (response.status >= 200 && response.status <= 299) {
+            return response.json();
+          } else {
+            throw Error(response.statusText);
+          }
+      })
+      .then(function(data) {
+ 
+        var cityInfo = {
+            city: currentCity,
+            lon: data.coord.lon,
+            lat: data.coord.lat
+        }
+
+        storedCities.push(cityInfo);
+        localStorage.setItem("cities", JSON.stringify(storedCities));
+
+        displaySearchHistory();
+
+        return cityInfo;
+      })
+      .then(function (data) {
+        getWeather(data);
+      })
+      return;
+}
+
+function handleClearHistory (event) {
+    event.preventDefault();
+    var pastSearchesEl = document.getElementById('past-searches');
+
+    localStorage.removeItem("cities");
+    pastSearchesEl.innerHTML ='';
+
+    return;
+}
