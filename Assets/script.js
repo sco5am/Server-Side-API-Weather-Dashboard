@@ -7,6 +7,23 @@ var pastSearchedCitiesEl = $('#past-searches');
 
 var currentCity;
 
+function displaySearchHistory() {
+    var storedCities = JSON.parse(localStorage.getItem("cities")) || [];
+    var pastSearchesEl = document.getElementById('past-searches');
+
+    pastSearchesEl.innerHTML ='';
+
+    for (i = 0; i < storedCities.length; i++) {
+        
+        var pastCityBtn = document.createElement("button");
+        pastCityBtn.classList.add("btn", "btn-primary", "my-2", "past-city");
+        pastCityBtn.setAttribute("style", "width: 100%");
+        pastCityBtn.textContent = `${storedCities[i].city}`;
+        pastSearchesEl.appendChild(pastCityBtn);
+    }
+    return;
+}
+
 function getWeather() {
     var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${APIkey}`
     fetch(requestUrl)
