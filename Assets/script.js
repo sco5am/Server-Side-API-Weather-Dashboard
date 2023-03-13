@@ -24,6 +24,17 @@ function displaySearchHistory() {
     return;
 }
 
+function handleClearHistory (event) {
+    event.preventDefault();
+    var pastSearchesEl = document.getElementById('past-searches');
+
+    localStorage.removeItem("cities");
+    pastSearchesEl.innerHTML ='';
+
+    return;
+}
+
+
 function getWeather() {
     var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${APIkey}`
     fetch(requestUrl)
@@ -172,12 +183,26 @@ function getCoordinates () {
       return;
 }
 
-function handleClearHistory (event) {
-    event.preventDefault();
-    var pastSearchesEl = document.getElementById('past-searches');
+function clearCurrentCityWeather () {
+    var currentConditionsEl = document.getElementById("currentConditions");
+    currentConditionsEl.innerHTML = '';
 
-    localStorage.removeItem("cities");
-    pastSearchesEl.innerHTML ='';
+    var fiveDayForecastHeaderEl = document.getElementById("fiveDayForecastHeader");
+    fiveDayForecastHeaderEl.innerHTML = '';
+
+    var fiveDayForecastEl = document.getElementById("fiveDayForecast");
+    fiveDayForecastEl.innerHTML = '';
+
+    return;
+}
+
+// handle submit of city name by trimming and sending to getCoordinates function, clear HTML display of past weather data, cards, titles
+function handleCityFormSubmit (event) {
+    event.preventDefault();
+    currentCity = cityInputEl.val().trim();
+
+    clearCurrentCityWeather();
+    getCoordinates();
 
     return;
 }
