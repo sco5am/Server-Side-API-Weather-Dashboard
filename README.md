@@ -7,7 +7,7 @@ For this assignment I was tasked with creating a weather dashboard using the Ope
 This project helped me better familiarize myself with third-party-APIs, as well as using bootstrap styling. 
 ## Usage
 
-The live site can be viewed at the following link: https://sco5am.github.io/team5-project1/
+The live site can be viewed at the following link: https://sco5am.github.io/Server-Side-API-Weather-Dashboard/
 
 ![](./Assets/images/Screenshot%20(15).png)
 
