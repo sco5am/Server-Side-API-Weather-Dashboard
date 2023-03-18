@@ -1,4 +1,4 @@
-var APIkey = "e8c6163569b8625c5a5cab8bf461be7e";
+var APIkey = "28192cc5dd81f85bcfd688d592d9a8ab";
 
 var cityInputEl = $('#city-input');
 var searchBtn = $('#search-button');
@@ -9,7 +9,7 @@ var currentCity;
 
 function getWeather(data) {
 
-    var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${APIkey}`
+    var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,alerts&units=imperial&appid=${APIkey}`
     fetch(requestUrl)
         .then(function(response) {
             return response.json();
@@ -36,12 +36,12 @@ function getWeather(data) {
 
             var currentCityTemp = data.current.temp;
             var currentTempEl = $('<p>')
-            currentTempEl.text(`Temp: ${currentCityTemp}°C`)
+            currentTempEl.text(`Temp: ${currentCityTemp}°F`)
             currentConditionsEl.append(currentTempEl);
             
             var currentCityWind = data.current.wind_speed;
             var currentWindEl = $('<p>')
-            currentWindEl.text(`Wind: ${currentCityWind} KPH`)
+            currentWindEl.text(`Wind: ${currentCityWind} MPH`)
             currentConditionsEl.append(currentWindEl);
 
             var currentCityHumidity = data.current.humidity;
@@ -93,15 +93,15 @@ function getWeather(data) {
                 humidity = data.daily[i].humidity;
 
                 var card = document.createElement('div');
-                card.classList.add('card', 'col-2', 'm-1', 'bg-primary', 'text-white');
+                card.classList.add('card', 'col-2', 'm-1', 'bg-info', 'text-white');
                 
                 var cardBody = document.createElement('div');
                 cardBody.classList.add('card-body');
                 cardBody.innerHTML = `<h6>${date}</h6>
                                       <img src= "http://openweathermap.org/img/wn/${icon}.png"> </><br>
-                                       ${temp}°C<br>
-                                       ${wind} KPH <br>
-                                       ${humidity}%`
+                                       ${temp}°F<br>
+                                       ${wind} MPH <br>
+                                       ${humidity}% Humidity`
                 
                 card.appendChild(cardBody);
                 fiveDayForecastEl.append(card);
@@ -118,7 +118,7 @@ function displaySearchHistory() {
     for (i = 0; i < storedCities.length; i++) {
         
         var pastCityBtn = document.createElement("button");
-        pastCityBtn.classList.add("btn", "btn-primary", "my-2", "past-city");
+        pastCityBtn.classList.add("btn", "btn-info", "my-2", "past-city");
         pastCityBtn.setAttribute("style", "width: 100%");
         pastCityBtn.textContent = `${storedCities[i].city}`;
         pastSearchesEl.appendChild(pastCityBtn);
